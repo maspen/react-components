@@ -14,33 +14,51 @@ class Beer extends React.Component {
 	}
 }
 
+class GroceryListItem extends React.Component {
+	constructor(props) {
+    	super(props);
+    	this.state = {
+  			bold: false
+  		};
+  	}
+
+  	onListItemClick() {
+  		this.setState({
+  			bold: !this.state.bold
+  		})
+  	}
+
+	render() {
+		var style = {
+      		textDecoration: this.state.bold ? 'line-through' : 'none'
+    	};	
+		return (
+			<div style={style} key={this.props.name} onClick={this.onListItemClick.bind(this)}>{this.props.name}</div>
+		);
+	}	
+}
+
 class GroceryList extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			groceries: [
 				'bananas',
-				'beer'
+				'beer',
+				'cheese',
+				'crackers',
+				'soda'
 			]
 		};
 	}
 
 	render() {
 		return (
-		
-			// <div id="grocery-list">
-			// 	<div>{this.state.groceries[0]}</div>
-			// 	<div>{this.state.groceries[1]}</div>
-			// </div>
-		
 			<div id="grocery-list">
-				<Bananas 
-					name={this.state.groceries[0]}
-				/>
-				<Beer 
-					name={this.state.groceries[1]}
-				/>
-			</div>		
+				{this.state.groceries.map(item =>
+					<GroceryListItem key={item.toString()} name={item} />
+				)}
+			</div>
 		);
 	}
 }
